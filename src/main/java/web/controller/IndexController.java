@@ -29,6 +29,6 @@ public class IndexController {
     @PostMapping("/member/signupcontroller") // 여기로 들어오면
     public String signupcontroller(MemberDto dto){ // String 값(html 파일명) 반환
         indexService.signup(dto); // 하기전에 받은 파라미터값을 dto(자동주입)값으로 signup 메소드에 넘기고
-        return "/"; // 최상위 경로 반환
+        return "redirect:/";
     }
 }
