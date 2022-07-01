@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import web.service.IndexService;
+import web.service.MemberService;
 
 @Configuration // config 로 사용하겠다
 public class SecurityConfig extends WebSecurityConfigurerAdapter { // 시큐리티를 상속받아 내가 커스텀
@@ -29,13 +30,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // 시큐리�
                 .and() // 그리고
                 .csrf().ignoringAntMatchers("/member/logincontroller") // 여기다 요청하는거 허용(기본값은 비허용)
                 .and() //그리고
-                .csrf().ignoringAntMatchers("/member/signupcontroller"); // 여기다 요청하는것도 허용
+                .csrf().ignoringAntMatchers("/member/signupcontroller") // 여기다 요청하는것도 허용
+                .and() // 그리고
+                .oauth2Login() // OAUTH 로그인
+                .userInfoEndpoint() // 유저 정보가 들어오는 위치
+                .userService(memberService); // 멤버서비스로 정보 받기
     }
 
     @Autowired // 자동으로 메모리 할당
     IndexService indexService; // IndexService 를 이 클래스에서 사용하겠다
+
+    @Autowired
+    MemberService memberService;
     @Override // 메소드 기본값으로 안쓰고 내가 커스텀
     protected void configure(AuthenticationManagerBuilder auth) throws Exception { // 비밀번호 맞는지 처리는
-        auth.userDetailsService(indexService).passwordEncoder(new BCryptPasswordEncoder()); // BCrypt 인코더 사용해서 처리
+        auth.userDetailsService(memberService).passwordEncoder(new BCryptPasswordEncoder()); // BCrypt 인코더 사용해서 처리
     }
+
 }

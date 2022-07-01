@@ -32,7 +32,6 @@ public class IndexService implements UserDetailsService { // UserDetailsService 
         authorities.add(new SimpleGrantedAuthority(Role.Member.getKey())); // 멤버 역할을 선언해서 리스트에 추가
 
         LoginDto loginDto=new LoginDto(memberEntity.getMid(), memberEntity.getMpassword(), authorities); // 역할을 담아서 LoginDto 저장
-
         return loginDto; // loginDto 리턴
     }
 }

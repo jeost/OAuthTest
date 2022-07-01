@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter // get 머시기 추가해줌
 public enum Role {
     Member("ROLE_MEMBER","회원"), // 멤버 역할
-    ADMIN("ROLE_ADMIN","어드민"); // 어드민 역할
+    ADMIN("ROLE_ADMIN","어드민"), // 어드민 역할
+    OAuth2("ROLE_OAuth2사용자","OAuth2사용자");
     private final String key;
     private final String keyword;
 }
